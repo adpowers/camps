@@ -1,0 +1,161 @@
+<div align="center"><font size="7">MAP-EDITOR</font></div><br><br>
+<font color="#0000FF" size="6">ABOUT</font><br>
+<br>
+The CAMPS database holds crucial objects that defined the paths drawn by CAMPS.
+Map-Editor is a GUI that allows an administrator to quickly and seamlessly change
+these database objects in a way intuitive to humans. All changes are updated real-time
+into the database.
+<p>The three database objects are:<br>
+  <strong>Building Nodes </strong><br>
+  Represents a building on campus. Each node is defined in terms of &lt;Name,
+  Abbreviated name, Node ID, Pixel X-location, Pixel Y-location&gt;. <br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Name</em> &#8211; The full name of the building,
+  as defined by http://www.washington.edu/home/maps.
+  For example, Chemistry Library Bldg.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Abbreviated Name</em> &#8211; The abbreviated
+  name of the building (also defined by the above website). For example, CHL.
+  <br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Node ID</em> &#8211; The database integer id
+  key particular to this node.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Pixel X-location</em> &#8211; The x-value of
+  the node location, with the origin centered at the top-left corner of the campus
+  map.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Pixel Y-location</em> &#8211; The y-value of
+  the node location.<br>
+  <strong>Path Nodes</strong><br>
+  Represents a non-building location on campus. They define the path between buildings.
+  Each node is defined in terms of &lt;Node ID, Pixel X-location, Pixel Y-location&gt;.
+  Node ID, Pixel X-location, and Pixel Y-location are the same as for Building
+  Nodes. Note that Building Nodes and Path Nodes are actually both node types
+  in the database.<br>
+  <strong>Edges </strong><br>
+  Represent paths between two nodes on campus. These can be either Building Nodes
+  or Path Nodes. Each edge is defined in terms of &lt;Node1, Node2, Direction,
+  Path Type&gt;. <br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Node 1</em> &#8211; The start node defining the
+  edge.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Node 2</em> &#8211; The destination node defining
+  the edge.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Direction</em> &#8211; Either bi-directional
+  or not bi-directional. Bi-directional means the edge can be traveled from node1
+  to node2 or vice versa. Not bi-directional means the edge can only be traveled
+  from node1 to node2. This may the be case for one-way doors.<br>
+  &nbsp;&nbsp;&nbsp; &#8226; <em>Path Type </em>&#8211; Currently, either Default
+  or Stairs. Default represents all non-stairs paths. The Path Type is important
+  in cases where traveling is done a bike, wheelchair, or other mechanism that
+  might make stair travel difficult or impossible. Future extensions of Path Type
+  and traveling method can result in more variations.</p>
+<p><strong>Map-Editor allows an admin to change these objects with powerful
+  built-in GUI tools, layed out on the back-drop of the actual UW Campus, so WYSIWYG
+  (what you see is what you get). Please read the User&#8217;s Manual to learn
+  how to use Map-Editor. </strong></p>
+<p></p>
+<p><br><br><br>
+  <font color="#0000FF" size="6">USER&#8217;S MANUAL</font><br>
+  <br>
+  <font size="5">Log-In:</font> <br>
+  [ PLEASE FILL-IN]</p><br>
+<p><font size="5">Administrator Instructions:</font> <br>
+  Map-Editor is visually split up into 4 sections, from top to down. <br>
+  &nbsp;&nbsp;&nbsp; 1. The <strong>Menu Toolbar </strong>(File, Change Colors).
+  <br>
+  &nbsp;&nbsp;&nbsp; 2. The <strong>Output Textbox Pane</strong>. <br>
+  &nbsp;&nbsp;&nbsp; 3. The <strong>Map Interface</strong>. <br>
+  &nbsp;&nbsp;&nbsp; 4. The <strong>Bottom Control Panel</strong>. <br>
+  We will discuss each in detail, in the order that you should learn it. Map Interface,
+  Bottom Control Panel, Output Textbox Pane, and Menu Toolbar.</p>
+<p><font color="#0066FF" size="4">Map Interface</font><br>
+  - Right-click and drag to move around the map.<br>
+  - Building nodes are represented by the sold blue circle with the building&#8217;s
+  abbreviated name attached.<br>
+  - Path nodes are represented by the blue concentric circle.<br>
+  - Edges/paths are represented by the green lines. They are by default bidirectional,
+  which is indicated by to arrows that point in opposite directions (looks like
+  a bow-tie).</p>
+<p><font color="#0066FF" size="4">Bottom Control Panel</font><br>
+  First, let&#8217;s discuss the radio buttons. They are Add Node, Add Building,
+  Add/Edit Path, Remove Node, and Move Node. <br>
+  <strong>Add Node:</strong><br>
+  Allows you to add Path Nodes. Click anywhere on the Map Interface to add a Path
+  Node at that location. A blue concentric circle appears on the Map Interface,
+  indicating the position of the Path Node. <br>
+  Note: for all radio button options, both left-click and right-click work. But
+  if you right-click and drag (to move around the map) the radio button action
+  will not be taken. <br>
+  <strong>Add Building:</strong><br>
+  Allows you to add Building Nodes. <br>
+  &nbsp;&nbsp;&nbsp; 1. Click anywhere on the Map Interface to add a Building
+  Node at that location. <br>
+  &nbsp;&nbsp;&nbsp; 2. An input textbox pop-up will ask for the &#8220;Full Name
+  of the new Building&#8221;. Type in the full-name of the building. Eg, Kane
+  Hall. <br>
+  &nbsp;&nbsp;&nbsp; 3. Press OK. <br>
+  &nbsp;&nbsp;&nbsp; 4. An input textbox pop-up will ask for the &#8220;Abbreviation
+  of the new Building&#8221;. Type in the abbreviation of the building. For example,
+  KNE.<br>
+  &nbsp;&nbsp;&nbsp; 5. Press OK.<br>
+  &nbsp;&nbsp;&nbsp; 6. A solid blue circle appears on the Map Interface, indicating
+  the position of the new Building Node.<br>
+  <strong>Add/Edit Path: </strong><br>
+  Allows you to create/edit the edge/path between two nodes. <br>
+  &nbsp;&nbsp;&nbsp; 1. Click on the first node (either Path Node or Building
+  Node) defining the edge you want to create (or already exists). The node will
+  be highlighted green, indicating your selection.<br>
+  &nbsp;&nbsp;&nbsp; 2. Click on the second node defining the edge. The node will
+  be highlighted red, indicating your selection. A pop-up menu will appear. <br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Checkmark the Bi-directional box
+  to make the edge bi-directional (traveling is allowed either from 1st node to
+  2nd node or vice versa).<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Uncheckmark the Bi-directional
+  box to make the edge non-bi-directional (traveling is only allowed from the
+  1st node to the 2nd node).<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Arrows along the path on the Map
+  Interface visually show which directions are allowed.<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Select the Path Type from the
+  drop down menu. Currently, Default and Stairs are supported.<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Click the Remove Edge button (only
+  appears if the edge already exists) to delete the edge.<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Click OK to finalize your selection.<br>
+  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &#8226; Click Cancel to cancel your selection.
+  <br>
+  <strong>Remove Node:</strong><br>
+  Allows you to remove nodes (either Path Nodes or Building Nodes). Click on a
+  node in the Map Interface, and a pop-up box will appear, asking &#8220;You have
+  clicked on a node, would you like to delete it?&#8221; Click Yes to delete the
+  node. Click No to not delete the node. <br>
+  <strong>Move Node:</strong><br>
+  Allows you to move nodes. Click on a node in the Map Interface. The node will
+  be highlighted green, indicating your selection. Use your keyboard arrow keys
+  to move the node up, left, down, or right. This allows for small adjustments.
+  If you want to move a node large distances, delete the node and a new one.</p>
+<p>Now, let&#8217;s discuss the other functions on the Bottom Control Panel. <br>
+  <strong>Path Defaults Drop-down Menu: </strong><br>
+  Allows you to change the default path type. Once changed, new edges created
+  will have the path type defaulted to the new value. <br>
+  <strong>Bi-Directional Checkbox:</strong><br>
+  Allows you to change the default directional mode. Check it to make new edges
+  default to bi-directional. Uncheck it to make new edges default to uni-directional.<br>
+  <strong>Refresh Data: </strong><br>
+  Allows you to refresh the Map Interface. If someone else is also using the Map-Editor
+  concurrently, Refresh Data updates the changes they made to your Map Interface.<br>
+  <strong>Reset: </strong><br>
+  Clears all selections on the Map Interface. For example, if you have a selected
+  a node, clicking Reset will clear your selection.<br>
+  <strong>Show Picture Checkbox: </strong><br>
+  Uncheck this to not display the campus map background. The nodes all the edges
+  will still display. May improve scrolling performance. <br>
+  <strong>Non-Building Destinations Checkbox: </strong><br>
+  Uncheck this to not display Path Nodes. Allows you to focus on the Building
+  Nodes and the paths between them.<br>
+  <br>
+  <font color="#0066FF" size="4">Output Textbox Pane</font><br>
+  Displays information about your interaction with the Map Interface. When you
+  add a Path Node or a Building Node, it will display &#8220;Added new node&#8221;
+  or &#8220;Added new building&#8221;. When you create/edit a path, it will display
+  node information in the form [Node Id] at [X-Pixel],[Y-Pixel]. </p>
+<p><font color="#0066FF" size="4">Menu Toolbar</font><br>
+  <em>File</em> &#8211; Allows you to exit the program.<br>
+  <em>Change Colors</em> &#8211; Allows you to change the colors of Map Interface
+  components (Node, Paths, Start Node for edges, End Node for edges). </p>
+<p><br>
+</p>

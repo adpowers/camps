@@ -160,13 +160,13 @@ public class GraphData {
 			//Define URL of database server for
 			// database named mysql
 			String url =
-				"jdbc:mysql://"+"cubist.cs.washington.edu"+":"+"3306"+"/"+"cse403c-wi07_test";
+				"jdbc:mysql://localhost:3306/camps";
 
 			//Get a connection to the database for a
 			// user named root with a blank password.
 			// This user is the default administrator
 			// having full privileges to do anything.
-			con = DriverManager.getConnection(url,"cse403c-wi07","");
+			con = DriverManager.getConnection(url,"camps","camps");
 
 			//Display URL and connection information
 			System.out.println("URL: " + url);

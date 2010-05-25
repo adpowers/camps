@@ -55,7 +55,7 @@ public class GenerateJson {
       node.x = Integer.parseInt(parts[1]);
       node.y = Integer.parseInt(parts[2]);
       node.name = locationNames.get(parts[3]);
-      node.abbreviation = locationNames.get(parts[3]);
+      node.abbreviation = locationAbbreviations.get(parts[3]);
       nodes.add(node);
       
       line = br.readLine();

@@ -61,9 +61,9 @@ public class GraphData {
 	  int i = 0;
 	  for (edu.washington.cs.cse403.camps.model.TransportationMethod modelMethod : edu.washington.cs.cse403.camps.model.TransportationMethod.values()) {
 	    transportationMethods.put(i, new TransportationMethod(i, modelMethod.name(), modelMethod.costMultiplier));
-	    i++;
-	  }
-	  
+      i++;
+    }
+  
     for (PathType pathType : pathTypes.values()) {
       Set<String> exclude = Sets.newHashSet();
       if (pathType.getName().equals("Stairs")) {
@@ -75,20 +75,20 @@ public class GraphData {
         }
       }
     }
-			
-		for (edu.washington.cs.cse403.camps.model.Node modelNode : nodeList.nodes) {
-		  Node node;
-		  if (modelNode.name == null) {
-		    node = new Node(modelNode.nodeId, new Point(modelNode.x, modelNode.y));
-		  } else {
-		    node = new Building(modelNode.nodeId, modelNode.x, modelNode.y, modelNode.name, modelNode.abbreviation);
-		    buildingSearchTree.put(modelNode.name, node);
-		    buildingSearchTree.put(modelNode.abbreviation, node);
-		  }
-		  nodes.put(modelNode.nodeId, node);
-		}
-		
-		for (edu.washington.cs.cse403.camps.model.Edge modelEdge : edgeList.edges) {
+
+    for (edu.washington.cs.cse403.camps.model.Node modelNode : nodeList.nodes) {
+      Node node;
+      if (modelNode.name == null) {
+        node = new Node(modelNode.nodeId, new Point(modelNode.x, modelNode.y));
+      } else {
+        node = new Building(modelNode.nodeId, modelNode.x, modelNode.y, modelNode.name, modelNode.abbreviation);
+        buildingSearchTree.put(modelNode.name, node);
+        buildingSearchTree.put(modelNode.abbreviation, node);
+      }
+      nodes.put(modelNode.nodeId, node);
+    }
+
+    for (edu.washington.cs.cse403.camps.model.Edge modelEdge : edgeList.edges) {
       Node startNode = nodes.get(modelEdge.startNodeId);
       Node endNode = nodes.get(modelEdge.endNodeId);
       PathType pathType = pathTypes.get(modelEdge.pathType);
@@ -96,7 +96,7 @@ public class GraphData {
       startNode.add(edge);
       endNode.add(edge);
       edges.add(edge);
-		}
+    }
   }
   
   private <T> T readObjectFromFileWithGson(File file, Class<T> classOfT) {

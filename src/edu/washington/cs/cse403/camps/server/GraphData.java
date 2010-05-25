@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.appengine.repackaged.com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.GsonBuilder;
 
 import edu.washington.cs.cse403.camps.model.EdgeList;
@@ -59,9 +60,21 @@ public class GraphData {
 	  
 	  int i = 0;
 	  for (edu.washington.cs.cse403.camps.model.TransportationMethod modelMethod : edu.washington.cs.cse403.camps.model.TransportationMethod.values()) {
-	    transportationMethods.put(i, new TransportationMethod(0, modelMethod.name(), modelMethod.costMultiplier));
+	    transportationMethods.put(i, new TransportationMethod(i, modelMethod.name(), modelMethod.costMultiplier));
 	    i++;
 	  }
+	  
+    for (PathType pathType : pathTypes.values()) {
+      Set<String> exclude = Sets.newHashSet();
+      if (pathType.getName().equals("Stairs")) {
+        exclude = Sets.newHashSet("Bike", "Wheelchair");
+      }
+      for (TransportationMethod transportationMethod : transportationMethods.values()) {
+        if (!exclude.contains(transportationMethod.getName())) {
+          pathType.addMethod(transportationMethod);
+        }
+      }
+    }
 			
 		for (edu.washington.cs.cse403.camps.model.Node modelNode : nodeList.nodes) {
 		  Node node;

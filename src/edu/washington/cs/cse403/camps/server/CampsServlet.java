@@ -238,7 +238,7 @@ public class CampsServlet extends HttpServlet {
 			{ types: [{id: 1, name: "Walk"}, {id: 2, name: "Jog"}, {id: 3, name: "Crawl"}] }
 					 */
 
-					Iterator iter = data.getTransportationMethods().values().iterator();
+					Iterator iter = data.getTransportationMethods().iterator();
 
 					out.print("{ \"types\" : [");
 

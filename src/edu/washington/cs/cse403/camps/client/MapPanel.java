@@ -89,6 +89,10 @@ public class MapPanel extends AbsolutePanel{
    *     @return            True if the overlay existed and was removed properly
    */
   public boolean removeOverlay(String key){
+    if (!refCount.containsKey(key)) {
+      return false;
+    }
+    
     Integer count = refCount.get(key);
      
     if (count.intValue() == 1) {   

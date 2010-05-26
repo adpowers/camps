@@ -1,7 +1,9 @@
 package edu.washington.cs.cse403.camps.server;
 
-import java.util.*;
-import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import edu.washington.cs.cse403.camps.model.Point;
 
 /**
  * Represents a Node in the path finding algorithm. The node can be a building or not a building. 

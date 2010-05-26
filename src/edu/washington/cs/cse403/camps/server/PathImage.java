@@ -83,69 +83,6 @@ public class PathImage {
     }
   }
 
-  /**
-   * Writes out an image representing the path to the provided output stream.  This image contains a transparent
-   * background and is meant to serve as an overlay onto a map.
-   * @param out stream to write to
-   * @throws IOException
-   */
-  public void writeImage(OutputStream out) throws IOException{
-    determineSize();
-    int width = getWidth();
-    int height = getHeight();
-    if(width < 5)
-      width = 10;
-    if(height < 5)
-      height = 10;
-    BufferedImage buffer =
-      new BufferedImage(width,
-          height,
-          BufferedImage.TYPE_INT_ARGB);
-    Graphics2D g = buffer.createGraphics();
-    g.setPaint(new Color(0,0,0,0));
-    g.fillRect(0,0,width,height);
-    Random rand = new Random();
-
-    Color[] colors = new Color[6];
-    colors[0] = new Color(255,255,0,128);
-    colors[1] = new Color(255,0,255,128);
-    colors[2] = new Color(0,255,255,128);
-    colors[3] = new Color(0,99,255,128);
-    colors[4] = new Color(0,0,255,128);
-    colors[5] = new Color(255,0,0,128);
-    Color color = colors[rand.nextInt(6)];
-
-    Color white = new Color(255,255,255,40);//last arg is alpha
-    Color white2 = new Color(255,255,255,40);//last arg is alpha
-
-    BasicStroke outline = new BasicStroke(20,BasicStroke.CAP_ROUND,BasicStroke.JOIN_BEVEL);
-    BasicStroke outline2 = new BasicStroke(25,BasicStroke.CAP_ROUND,BasicStroke.JOIN_BEVEL);
-    BasicStroke pen = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_BEVEL); 
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    Polygon poly = new Polygon();
-    Iterator iter = pathData.nodes.iterator();
-    while(iter.hasNext()){
-      Node cur = (Node)iter.next();
-      if(!cur.isBuilding() || pathData.nodes.size() <= 3){
-        poly.addPoint(cur.getLocation().x - minX, cur.getLocation().y - minY);
-      }
-    }
-    color = new Color(255,0,0,164);
-    g.setStroke(outline);
-    g.setColor(white);
-    g.drawPolyline(poly.xpoints, poly.ypoints, poly.npoints);
-    g.setStroke(outline2);
-    g.setColor(white2);
-    g.drawPolyline(poly.xpoints, poly.ypoints, poly.npoints);
-    g.setStroke(pen);
-    g.setColor(color);
-    g.drawPolyline(poly.xpoints, poly.ypoints, poly.npoints);
-    g.dispose();
-    ImageIO.write(buffer, "png", out);
-  }
-
   public String getImageUri() {
     List<Integer> xPoints = Lists.newArrayList();
     List<Integer> yPoints = Lists.newArrayList();

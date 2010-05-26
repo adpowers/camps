@@ -1,5 +1,6 @@
 package edu.washington.cs.cse403.camps.server;
-import java.awt.Point;
+
+import edu.washington.cs.cse403.camps.model.Point;
 
 
 /**

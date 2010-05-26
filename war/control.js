@@ -207,7 +207,7 @@ function addOverlay(start, end, x, y, w, h, url) {
 // end - last node id (building)
 // trans - the transportation type over the overlay
 function removeOverlay(start, end, trans) {
-	var key = start + "-" + end + "-" + transtype;
+	var key = start + "-" + end + "-" + trans;
 	document.removeOverlayWrapper(key);
 }
 

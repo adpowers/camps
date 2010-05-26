@@ -1,9 +1,6 @@
 package edu.washington.cs.cse403.camps.server;
 
-import java.awt.Point;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,7 +10,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.appengine.repackaged.com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -21,6 +25,7 @@ import com.google.gson.GsonBuilder;
 
 import edu.washington.cs.cse403.camps.model.EdgeList;
 import edu.washington.cs.cse403.camps.model.NodeList;
+import edu.washington.cs.cse403.camps.model.Point;
 
 /**
  * GraphData class is the representation of the entire database.  The goal of this class
@@ -30,6 +35,10 @@ import edu.washington.cs.cse403.camps.model.NodeList;
  */
 
 public class GraphData {
+  private static final Logger log = Logger.getLogger(GraphData.class.getName());
+  
+  private BlobstoreService blobstoreService;
+  
   private Map<edu.washington.cs.cse403.camps.model.PathType, PathType> pathTypes;
   private Map<Integer, TransportationMethod> transportationMethods;
 
@@ -38,6 +47,8 @@ public class GraphData {
 	private TreeMap<String, Node> buildingSearchTree;
 	
 	public GraphData() {
+	  blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+
 	  pathTypes = Maps.newHashMap(); // concurrent?
 	  transportationMethods = Maps.newHashMap();
 		nodes = Maps.newHashMap();
@@ -50,9 +61,8 @@ public class GraphData {
 	 * Fill in the instance of this class
 	 */
 	private void init() {
-	  String baseDir = "/Users/Andrew/Documents/workspace/Camps/";
-	  NodeList nodeList = readObjectFromFileWithGson(new File(baseDir, "nodes.json"), NodeList.class);
-	  EdgeList edgeList = readObjectFromFileWithGson(new File(baseDir, "edges.json"), EdgeList.class);
+	  NodeList nodeList = readObjectFromBlobStoreWithGson("nodes.json", NodeList.class);
+	  EdgeList edgeList = readObjectFromBlobStoreWithGson("edges.json", EdgeList.class);
 
 	  for (edu.washington.cs.cse403.camps.model.PathType modelPathType : edu.washington.cs.cse403.camps.model.PathType.values()) {
 	    pathTypes.put(modelPathType, new PathType(0, modelPathType.name(), modelPathType.costMultiplier));
@@ -99,20 +109,27 @@ public class GraphData {
     }
   }
   
-  private <T> T readObjectFromFileWithGson(File file, Class<T> classOfT) {
-    BufferedReader br = null;
+  public <T> T readObjectFromBlobStoreWithGson(String blob, Class<T> classOfT) {
     try {
-      br = new BufferedReader(new FileReader(file));
-      return new GsonBuilder().disableHtmlEscaping().create().fromJson(br, classOfT);
-    } catch (Exception e) {
-      throw new RuntimeException("Error reading object from file.", e);
-    } finally {
-      if (br != null) {
-        try {
-          br.close();
-        } catch (Exception e) {
+      log.info("Blob key: " + blob);
+      BlobInfoFactory infoFactory = new BlobInfoFactory(DatastoreServiceFactory.getDatastoreService());
+      BlobInfo blobInfo = null;
+      Iterator<BlobInfo> iter = infoFactory.queryBlobInfos();
+      while (iter.hasNext()) {
+        BlobInfo temp = iter.next();
+        if (temp.getFilename().equals(blob)) {
+          blobInfo = temp;
         }
       }
+      if (blobInfo == null) {
+        throw new RuntimeException("Couldn't find blob: " + blob);
+      }
+      byte[] rawBytes = blobstoreService.fetchData(blobInfo.getBlobKey(), 0L, blobInfo.getSize());
+      log.info("Got size: " + rawBytes.length);
+      String blobString = new String(rawBytes, "UTF-8");
+      return new GsonBuilder().disableHtmlEscaping().create().fromJson(blobString, classOfT);
+    } catch (UnsupportedEncodingException e) {
+      throw new RuntimeException("Bad stuff", e);
     }
   }
   

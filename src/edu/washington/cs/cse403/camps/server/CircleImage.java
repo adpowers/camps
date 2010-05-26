@@ -38,27 +38,6 @@ public class CircleImage {
 		maxY = y + circleSize/2 + BUFFER;
 	}
 	
-	public void writeImage(OutputStream out) throws IOException{
-		determineSize();
-		int width = getWidth();
-		int height = getHeight();
-		BufferedImage buffer =
-		    new BufferedImage(width,
-		                      height,
-		                      BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = buffer.createGraphics();
-		g.setPaint(new Color(0,0,0,0));
-		g.fillRect(0,0,width,height);
-		g.setColor(new Color(255,0,0,128));
-		
-		BasicStroke pen = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_BEVEL); 
-		g.setStroke(pen);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.drawOval(BUFFER, BUFFER, circleSize, circleSize);
-		g.dispose();
-		ImageIO.write(buffer, "png", out);
-	}
-	
 	public String getImageUri() {
 	  return "http://chart.apis.google.com/chart?"
 	    + "cht=lxy" // chart type

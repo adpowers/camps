@@ -6,8 +6,8 @@ public class PathData {
 	public double pathDistance;
 	public double pathCost;
 	public double pathTime;
-	public List nodes;
-	public PathData(List nodes, double cost, double distance, double time){
+	public List<Node> nodes;
+	public PathData(List<Node> nodes, double cost, double distance, double time){
 		this.nodes = nodes;
 		this.pathDistance = distance;
 		this.pathTime = time;

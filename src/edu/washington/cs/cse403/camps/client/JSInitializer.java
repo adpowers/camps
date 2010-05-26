@@ -18,11 +18,11 @@ public class JSInitializer {
 	 */
 	public native void setup() /*-{
 		var map = this.@edu.washington.cs.cse403.camps.client.JSInitializer::map;
-		$doc.addOverlayWrapper = function(url, x, y, w, h) {
-			map.@edu.washington.cs.cse403.camps.client.MapPanel::addOverlay(Ljava/lang/String;IIII)(url,x,y,w,h);
+		$doc.addOverlayWrapper = function(key, url, x, y, w, h) {
+			map.@edu.washington.cs.cse403.camps.client.MapPanel::addOverlay(Ljava/lang/String;Ljava/lang/String;IIII)(key,url,x,y,w,h);
 		}
-		$doc.removeOverlayWrapper = function(url) {
-			map.@edu.washington.cs.cse403.camps.client.MapPanel::removeOverlay(Ljava/lang/String;)(url);
+		$doc.removeOverlayWrapper = function(key) {
+			map.@edu.washington.cs.cse403.camps.client.MapPanel::removeOverlay(Ljava/lang/String;)(key);
 		}
 	}-*/;
 }

@@ -183,7 +183,7 @@ function getPathInfo(prev, row, update) {
 	                updateTotal();
 	            }
 	            // add overlay
-	            addOverlay(firstID, secondID, res.x, res.y, res.w, res.h);
+	            addOverlay(firstID, secondID, res.x, res.y, res.w, res.h, res.imageUrl);
 	        }
         }
     }
@@ -197,9 +197,9 @@ function getPathInfo(prev, row, update) {
 // y - coordinate on the base map
 // w - width of the image returned
 // h - width of the image returned
-function addOverlay(start, end, x, y, w, h) {
-    var url = baseURL + "?method=image&node1=" + start + "&node2=" + end + "&trans_type=" + transtype;
-    document.addOverlayWrapper(url, x, y, w, h);  
+function addOverlay(start, end, x, y, w, h, url) {
+    var key = start + "-" + end + "-" + transtype;
+    document.addOverlayWrapper(key, url, x, y, w, h);  
 }
 
 // Pass this three ints to remove an overlap from the map.
@@ -207,8 +207,8 @@ function addOverlay(start, end, x, y, w, h) {
 // end - last node id (building)
 // trans - the transportation type over the overlay
 function removeOverlay(start, end, trans) {
-	var url = baseURL + "?method=image&node1=" + start + "&node2=" + end + "&trans_type=" + trans;
-	document.removeOverlayWrapper(url);
+	var key = start + "-" + end + "-" + transtype;
+	document.removeOverlayWrapper(key);
 }
 
 // Prints the transportation types on the screen.

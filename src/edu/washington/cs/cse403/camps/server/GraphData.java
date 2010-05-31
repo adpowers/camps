@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -37,42 +36,42 @@ import edu.washington.cs.cse403.camps.model.TransportationMethod;
 
 public class GraphData {
   private static final Logger log = Logger.getLogger(GraphData.class.getName());
-  
+
   private BlobstoreService blobstoreService;
-  
+
   private Map<edu.washington.cs.cse403.camps.model.PathType, PathType> pathTypes;
   private Map<Integer, TransportationMethod> transportationMethods;
 
   private Map<Integer, Node> nodes;
-	private List<Edge> edges;
-	private TreeMap<String, Node> buildingSearchTree;
-	
-	public GraphData() {
-	  blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+  private List<Edge> edges;
+  private TreeMap<String, Node> buildingSearchTree;
 
-	  pathTypes = Maps.newHashMap(); // concurrent?
-	  transportationMethods = Maps.newHashMap();
-		nodes = Maps.newHashMap();
-		edges = Lists.newArrayList();
-		buildingSearchTree = Maps.newTreeMap();
-		init();
-	}
-	
-	/**
-	 * Fill in the instance of this class
-	 */
-	private void init() {
-	  NodeList nodeList = readObjectFromBlobStoreWithGson("nodes.json", NodeList.class);
-	  EdgeList edgeList = readObjectFromBlobStoreWithGson("edges.json", EdgeList.class);
+  public GraphData() {
+    blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
-	  for (edu.washington.cs.cse403.camps.model.PathType modelPathType : edu.washington.cs.cse403.camps.model.PathType.values()) {
-	    pathTypes.put(modelPathType, new PathType(0, modelPathType.name(), modelPathType.costMultiplier));
-	  }
-	  
-	  for (TransportationMethod modelMethod : TransportationMethod.values()) {
-	    transportationMethods.put(modelMethod.id, modelMethod);
+    pathTypes = Maps.newHashMap(); // concurrent?
+    transportationMethods = Maps.newHashMap();
+    nodes = Maps.newHashMap();
+    edges = Lists.newArrayList();
+    buildingSearchTree = Maps.newTreeMap();
+    init();
+  }
+
+  /**
+   * Fill in the instance of this class
+   */
+  private void init() {
+    NodeList nodeList = readObjectFromBlobStoreWithGson("nodes.json", NodeList.class);
+    EdgeList edgeList = readObjectFromBlobStoreWithGson("edges.json", EdgeList.class);
+
+    for (edu.washington.cs.cse403.camps.model.PathType modelPathType : edu.washington.cs.cse403.camps.model.PathType.values()) {
+      pathTypes.put(modelPathType, new PathType(0, modelPathType.name(), modelPathType.costMultiplier));
     }
-  
+
+    for (TransportationMethod modelMethod : TransportationMethod.values()) {
+      transportationMethods.put(modelMethod.id, modelMethod);
+    }
+
     for (PathType pathType : pathTypes.values()) {
       Set<String> exclude = Sets.newHashSet();
       if (pathType.getName().equals("Stairs")) {
@@ -107,7 +106,7 @@ public class GraphData {
       edges.add(edge);
     }
   }
-  
+
   public <T> T readObjectFromBlobStoreWithGson(String blob, Class<T> classOfT) {
     try {
       log.info("Blob key: " + blob);
@@ -131,7 +130,7 @@ public class GraphData {
       throw new RuntimeException("Bad stuff", e);
     }
   }
-  
+
   public List getMatchingBuildings(String substring){
     Set primaryMatches = new TreeSet();
     Set secondaryMatches = new TreeSet();
@@ -139,7 +138,7 @@ public class GraphData {
     while(iter.hasNext()){
       String cur = (String)iter.next();
       String lowerCase = cur.toLowerCase();
-      
+
       if(lowerCase.startsWith(substring.toLowerCase())){
         Node val = (Node)buildingSearchTree.get(cur);
         primaryMatches.add(val);
@@ -152,7 +151,7 @@ public class GraphData {
     temp.addAll(secondaryMatches);
     return temp;
   }
-  
+
   /**
    * Give all the nodes in the database
    * @return A map of the nodes. key is the node ID, Value is a node class
@@ -160,16 +159,16 @@ public class GraphData {
   public HashMap getNodes(){
     return new HashMap(nodes);
   }
-  
+
   /**
    * Give all the edges in the database
    * @return An arraylist of edges.
    */
   public ArrayList getEdges(){
     return new ArrayList(edges);
-    
+
   }
-  
+
   /**
    * Give all the PathTypes in the database
    * @return A map of PathType.  Key is the PathType ID, Value is a PathType class
@@ -177,7 +176,7 @@ public class GraphData {
   public HashMap getPathTypes(){
     return new HashMap(this.pathTypes);
   }
-  
+
   /**
    * Give all the TransportationMethods in the database
    * @return A map of TransportationMethods.  Key is TransportationMethod ID, Value is a TransportationMethod class
@@ -185,15 +184,15 @@ public class GraphData {
   public Collection<TransportationMethod> getTransportationMethods() {
     return transportationMethods.values();
   }
-  
+
   public Node getNodeById(int id){
     return (Node)nodes.get(new Integer(id));
   }
-  
+
   public Building getBuildingByName(String name){
     return (Building)buildingSearchTree.get(name);
   }
-  
+
   public TransportationMethod getTransportationMethodById(int id){
     return (TransportationMethod)transportationMethods.get(new Integer(id));
   }

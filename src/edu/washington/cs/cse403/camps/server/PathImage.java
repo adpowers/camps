@@ -1,19 +1,7 @@
 package edu.washington.cs.cse403.camps.server;
 
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import com.google.appengine.repackaged.com.google.common.base.Join;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;

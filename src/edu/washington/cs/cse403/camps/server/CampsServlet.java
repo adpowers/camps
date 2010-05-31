@@ -16,6 +16,8 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 
+import edu.washington.cs.cse403.camps.model.TransportationMethod;
+
 
 /** 
  * CampsServlet The main servlet for the CAMPS program.  It responds to get requests from the client code
@@ -215,7 +217,7 @@ public class CampsServlet extends HttpServlet {
 
         while(iter.hasNext()) {
           TransportationMethod t = (TransportationMethod)iter.next();
-          out.print("{ \"id\": " + t.getID() + ", \"name\": \"" + t.getName() + "\"}");
+          out.print("{ \"id\": " + t.id + ", \"name\": \"" + t.name() + "\"}");
           if (iter.hasNext()) {
             out.print(", ");
           }

@@ -1,5 +1,7 @@
 package edu.washington.cs.cse403.camps.server;
 import java.util.*;
+
+import edu.washington.cs.cse403.camps.model.TransportationMethod;
 /**
  * FindPath --
  * This implements an algorithm to find the path

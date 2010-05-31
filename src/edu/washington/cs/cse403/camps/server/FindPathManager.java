@@ -3,6 +3,10 @@ package edu.washington.cs.cse403.camps.server;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.appengine.repackaged.com.google.common.base.Objects;
+
+import edu.washington.cs.cse403.camps.model.TransportationMethod;
+
 /**
  * This class is a manager for running find path 
  * instances and caching path results.  Only a
@@ -118,7 +122,7 @@ public class FindPathManager {
 		}
 
 		public int hashCode() {
-			return start.getID()*1000000+end.getID()*1000+trans.getID();
+		  return Objects.hashCode(start.getID(), end.getID(), trans);
 		}
 
 		public boolean equals(Object o){

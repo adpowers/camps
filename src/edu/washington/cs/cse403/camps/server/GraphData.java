@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import edu.washington.cs.cse403.camps.model.EdgeList;
 import edu.washington.cs.cse403.camps.model.NodeList;
 import edu.washington.cs.cse403.camps.model.Point;
+import edu.washington.cs.cse403.camps.model.TransportationMethod;
 
 /**
  * GraphData class is the representation of the entire database.  The goal of this class
@@ -68,10 +69,8 @@ public class GraphData {
 	    pathTypes.put(modelPathType, new PathType(0, modelPathType.name(), modelPathType.costMultiplier));
 	  }
 	  
-	  int i = 0;
-	  for (edu.washington.cs.cse403.camps.model.TransportationMethod modelMethod : edu.washington.cs.cse403.camps.model.TransportationMethod.values()) {
-	    transportationMethods.put(i, new TransportationMethod(i, modelMethod.name(), modelMethod.costMultiplier));
-      i++;
+	  for (TransportationMethod modelMethod : TransportationMethod.values()) {
+	    transportationMethods.put(modelMethod.id, modelMethod);
     }
   
     for (PathType pathType : pathTypes.values()) {
@@ -80,7 +79,7 @@ public class GraphData {
         exclude = Sets.newHashSet("Bike", "Wheelchair");
       }
       for (TransportationMethod transportationMethod : transportationMethods.values()) {
-        if (!exclude.contains(transportationMethod.getName())) {
+        if (!exclude.contains(transportationMethod.name())) {
           pathType.addMethod(transportationMethod);
         }
       }

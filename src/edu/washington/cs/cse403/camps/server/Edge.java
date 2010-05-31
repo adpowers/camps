@@ -1,5 +1,7 @@
 package edu.washington.cs.cse403.camps.server;
 
+import edu.washington.cs.cse403.camps.model.TransportationMethod;
+
 
 /**
  * Represents the path between two node for the path finding algorithm
